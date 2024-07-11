@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 class AdminModel {
     constructor(username, password) {
-        this.id = uuidv4(); // Generate a unique ID
         this.username = username;
         this.password = password;
 
@@ -11,13 +10,7 @@ class AdminModel {
     }
 
     async saveAdmin() {
-        const adminData = {
-            id: this.id,
-            username: this.username,
-            password: this.password
-        };
-
-        const filePath =  'C:/Users/Priyanshu/Desktop/Complaint_Gov/assets/admin.json';
+        const filePath = 'C:/Users/Priyanshu/Desktop/Complaint_Gov/assets/admin.json';
 
         try {
             let admins = [];
@@ -31,6 +24,24 @@ class AdminModel {
                     return;
                 }
             }
+
+            // Check if username is unique
+            if (admins.some(admin => admin.username === this.username)) {
+                console.error('Error: Username already exists');
+                return;
+            }
+
+            // Generate a unique ID
+            let uniqueId;
+            do {
+                uniqueId = uuidv4();
+            } while (admins.some(admin => admin.id === uniqueId));
+
+            const adminData = {
+                id: uniqueId,
+                username: this.username,
+                password: this.password
+            };
 
             admins.push(adminData);
 
