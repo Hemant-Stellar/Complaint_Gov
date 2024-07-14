@@ -1,6 +1,7 @@
 import saveUser from "../../Models/userIdModel/userIdModel.js"
 import { Model } from '../../Models/index.js';
 import { Helper } from "../../Helpers/index.js";
+
 export const  signup= async(req,res)=>{
     try{
         const {username,fullname,password}=req.body
