@@ -72,3 +72,40 @@ export const getAssignedComplaintIdsByUsername = async (employeeUsername) => {
         return [];
     }
 };
+
+const complaintsFilePath =  '../../../assets/complaint.json';
+
+export const getComplaintByDakId = async (dakId)=> {
+    try {
+        // Read complaints data from complaints JSON file
+        const complaintsData = await readFile(complaintsFilePath, 'utf-8');
+        const complaintsJson = JSON.parse(complaintsData);
+
+        // Iterate through the keys (Dak_IDs) in complaintsJson
+        for (const key in complaintsJson) {
+            if (complaintsJson.hasOwnProperty(key)) {
+                // Check if the current complaint's Dak_ID matches the input Dak_ID
+                if (complaintsJson[key].Dak_ID === dakId) {
+                    return complaintsJson[key]; // Return the complaint object
+                }
+            }
+        }
+
+        // Return null if no complaint with the given Dak_ID is found
+        return null;
+    } catch (error) {
+        console.error('Error reading complaints:', error);
+        return null;
+    }
+}
+
+// Example usage:
+// (async () => {
+//     const dakId = "AB105";
+//     const complaint = await getComplaintByDakId(dakId);
+//     if (complaint) {
+//         console.log('Complaint found:', complaint);
+//     } else {
+//         console.log(`Complaint with Dak_ID ${dakId} not found.`);
+//     }
+// })();

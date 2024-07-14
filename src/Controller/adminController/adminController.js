@@ -18,3 +18,54 @@ export const addEmployee = async (req,res)=>{
         res.status(500).send('Internal Server Error');
     }
 }
+
+export const addAssignment = async (req,res) =>{
+    const {assignee,Dak_ID} = req.body;
+    try {
+        // Call Helper.add to add the employee
+        const result = await Helper.addAssignment(assignee,Dak_ID);
+
+        if (result) {
+            res.status(200).send('assigned successfully');
+        } else {
+            res.status(400).send('Failed to assign.');
+        }
+    } catch (error) {
+        console.error('Error assigning :', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+export const getAllEmployees = async(req,res) =>{
+    try {
+        // Call Helper.add to get the employee
+        const result = await Helper.getAllEmployees();
+
+        if (result) {
+            res.status(200).send(result);
+        } else {
+            res.status(400).send('Failed to get employee');
+        }
+    } catch (error) {
+        console.error('Error getting all employee :', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+
+export const filterByStatus = async(req,res)=>{
+    const {status} = req.body;
+    try {
+        // Call Helper.add to get the employee
+        const result = await Helper.filterComplaintsByStatus(status);
+
+        if (result) {
+            res.status(200).send(result);
+        } else {
+            res.status(400).send('Failed check status');
+        }
+    } catch (error) {
+        console.error('Error checking status :', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
