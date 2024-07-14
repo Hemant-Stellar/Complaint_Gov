@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const filePath = '../../../assets/userId.json';
 
-async function saveUser(username, fullName, password) {
+export default saveUser = async (username, fullName, password) =>{
     try {
         let users = {};
 
@@ -16,6 +16,7 @@ async function saveUser(username, fullName, password) {
                 return false;
             }
         }
+
         // Check if username is already taken
         if (users[username]) {
             console.error('Error: Username already exists');
@@ -30,7 +31,7 @@ async function saveUser(username, fullName, password) {
 
         await writeFile(filePath, JSON.stringify(users, null, 2), 'utf-8');
         console.log('User saved successfully.');
-        return true;
+        return false;
     } catch (err) {
         console.error('Error writing file:', err);
     }
@@ -41,4 +42,4 @@ async function exampleUsage() {
     await saveUser('username12', "Anon Edit", 'password');
 }
 
-exampleUsage();
+// exampleUsage();
