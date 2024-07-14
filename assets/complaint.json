@@ -1,1 +1,14 @@
-[]
+{
+  "AB105": {
+    "Dak_ID": "AB105",
+    "Date_Received": "02-06-2024",
+    "Sender_Information": "DEV PARKASH",
+    "Sender_Number": "8816889241",
+    "Complaint_Details": "Denied social benefits without reason.",
+    "Status": "Pending",
+    "userName": "someUserId",
+    "remarks": null,
+    "Priority": null,
+    "Assigned_Person": null
+  }
+}

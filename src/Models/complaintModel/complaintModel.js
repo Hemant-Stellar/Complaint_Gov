@@ -2,13 +2,20 @@ import { writeFile, readFile } from 'fs/promises';
 
 const filePath = '../../../assets/complaint.json';
 
+// Define enum for Status
+const StatusEnum = {
+    COMPLETE: 'Complete',
+    PENDING: 'Pending',
+    ASSIGNED: 'Assigned'
+};
+
 async function saveComplaint(
     Dak_ID, 
     Date_Received, 
     Sender_Information, 
     Sender_Number, 
     Complaint_Details, 
-    Status, 
+    Status = StatusEnum.PENDING, // Default status to Pending if not provided
     userName, 
     remarks
 ) {
@@ -41,7 +48,7 @@ async function saveComplaint(
             Complaint_Details,
             Status,
             userName,
-            remarks:null,
+            remarks: null,
             Priority: null,
             Assigned_Person: null
         };
@@ -67,7 +74,7 @@ async function saveComplaint(
 //         'DEV PARKASH', 
 //         '8816889241', 
 //         'Denied social benefits without reason.', 
-//         'Complete', 
+//         StatusEnum.COMPLETE, // Use enum value
 //         'someUserId', 
 //         'some remarks'
 //     );
@@ -77,15 +84,14 @@ async function saveComplaint(
 // exampleUsage();
 export default saveComplaint;
 
-
-const x= await saveComplaint(
-            'AB105', 
-            '02-06-2024', 
-            'DEV PARKASH', 
-            '8816889241', 
-            'Denied social benefits without reason.', 
-            'Complete', 
-            'someUserId', 
-            'some remarks'
-);
-
+// const x = await saveComplaint(
+//     'AB105', 
+//     '02-06-2024', 
+//     'DEV PARKASH', 
+//     '8816889241', 
+//     'Denied social benefits without reason.', 
+//     StatusEnum.PENDING, // Use enum value
+//     'someUserId', 
+//     'some remarks'
+// );
+// console.log(x);
