@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises';
 const filePath = '../../../assets/complaint.json';
 
 // Function to filter complaints by status and return their IDs
-async function filterComplaintsByStatus(status) {
+export const filterComplaintsByStatus =async (status)=> {
     try {
         // Read the complaints from the file
         const data = await readFile(filePath, 'utf-8');
@@ -40,10 +40,35 @@ async function filterComplaintsByStatus(status) {
 // }
 
 // exampleUsage();
-export default filterComplaintsByStatus;
+
 
 // const filteredIds = await filterComplaintsByStatus('Pending');
 // console.log(`IDs of complaints with status Pending: ${filteredIds}`);
 
 // const allIds = await filterComplaintsByStatus('');
 // console.log(`IDs of all complaints: ${allIds}`);
+
+
+
+
+const assignmentsFilePath = '../../../assets/assigned.json';
+
+export const getAssignedComplaintIdsByUsername = async (employeeUsername) => {
+    try {
+        // Read assignments data from assignments JSON file
+        const assignmentsData = await readFile(assignmentsFilePath, 'utf-8');
+        const assignmentsJson = JSON.parse(assignmentsData);
+
+        // Check if employeeUsername exists in assignmentsJson
+        if (!assignmentsJson[employeeUsername]) {
+            console.log(`Employee ${employeeUsername} does not have any assigned complaints.`);
+            return [];
+        }
+
+        // Return assigned complaint IDs for the employee
+        return assignmentsJson[employeeUsername];
+    } catch (error) {
+        console.error('Error reading assignments:', error);
+        return [];
+    }
+};
