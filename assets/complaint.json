@@ -17,9 +17,9 @@
     "Sender_Information": "Alive",
     "Sender_Number": 1234,
     "Complaint_Details": "why i am alive",
-    "Status": "Complete",
+    "Status": "Pending",
     "userName": "newUser",
-    "remarks": "ask better questions",
+    "remarks": "Ask better questions",
     "Priority": null,
     "Assigned_Person": null
   }
