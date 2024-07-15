@@ -37,7 +37,9 @@ app.use(function (err, req, res, next) {
         error: err.message,
     });
 });
-
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 // SSR Middleware setup (example, adjust as per your frontend framework)
 app.get('/admin/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
@@ -53,5 +55,5 @@ app.get('/employee/*', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`,`link to server is http://localhost:${PORT}/`);
 });

@@ -53,14 +53,15 @@ export const addComplaint = async (req,res) =>{
 }
 
 export const checkProgress = async (req,res)=>{
-    const {Dak_ID} = req.body;
+    const {Dak_ID} = req.query;
+    console.log(Dak_ID);
     try{
         
         const check = await Helper.checkProgress(Dak_ID);
         if(!check){
-            res.status(400).send("Dak_id not found ")
+            res.status(200).send("Dak_id not found ")
         }else{
-        res.status(200).send(check);
+            res.status(200).send(check);
         }
     }catch(err){
         res.status(500).json({Message:err.Message})

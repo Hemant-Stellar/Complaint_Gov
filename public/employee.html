@@ -172,7 +172,12 @@
                     throw new Error('Failed to fetch data');
                 }
 
-                return await response.json();
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return await response.json();
+                } else {
+                    return await response.text(); // Handle string response
+                }
             } catch (error) {
                 console.error('Error:', error);
                 return { error: error.message };
