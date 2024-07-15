@@ -11,7 +11,7 @@ export const addEmployee = async (req,res)=>{
         if (result) {
             res.status(200).send('Employee added successfully.');
         } else {
-            res.status(400).send('Failed to add employee.');
+            res.status(200).send('Failed to add employee.');
         }
     } catch (error) {
         console.error('Error adding employee:', error);
@@ -28,7 +28,7 @@ export const addAssignment = async (req,res) =>{
         if (result) {
             res.status(200).send('assigned successfully');
         } else {
-            res.status(400).send('Failed to assign.');
+            res.status(200).send('Failed to assign.');
         }
     } catch (error) {
         console.error('Error assigning :', error);

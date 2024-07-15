@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles can be added here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"],
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #filterResult p,
+        #assignResult p,
+        #addEmployeeResult p {
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #dff0d8;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            color: #155724;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header Section -->
+        <header>
+            <h1>Admin Dashboard</h1>
+        </header>
+
+        <!-- Main Content Section -->
+        <main>
+            <!-- Filter by Status Section -->
+            <section id="filterByStatus">
+                <h2>Filter by Status</h2>
+                <form id="filterForm">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="Pending">Pending</option>
+                        <option value="Complete">Complete</option>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+                <div id="filterResult">
+                    <!-- Filtered results will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Get All Employees Section -->
+            <section id="getAllEmployees">
+                <h2>All Employees</h2>
+                <button id="loadEmployees">Load Employees</button>
+                <ul id="employeesList">
+                    <!-- List of employees will be populated here -->
+                </ul>
+            </section>
+
+            <!-- Assign Complaint Section -->
+            <section id="assignComplaint">
+                <h2>Assign Complaint</h2>
+                <form id="assignForm">
+                    <label for="assignee">Assignee:</label>
+                    <input type="text" id="assignee" name="assignee" required>
+                    <label for="Dak_ID">Complaint ID:</label>
+                    <input type="text" id="Dak_ID" name="Dak_ID" required>
+                    <button type="submit">Assign</button>
+                </form>
+                <div id="assignResult">
+                    <!-- Assignment result message will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Add Employee Section -->
+            <section id="addEmployee">
+                <h2>Add Employee</h2>
+                <form id="addEmployeeForm">
+                    <label for="adminUsername">Admin Username:</label>
+                    <input type="text" id="adminUsername" name="adminUsername" required>
+                    <label for="employeeUsername">Employee Username:</label>
+                    <input type="text" id="employeeUsername" name="employeeUsername" required>
+                    <label for="employeePassword">Employee Password:</label>
+                    <input type="password" id="employeePassword" name="employeePassword" required>
+                    <button type="submit">Add Employee</button>
+                </form>
+                <div id="addEmployeeResult">
+                    <!-- Add employee result message will be displayed here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to handle form submissions and fetch data
+        async function fetchData(url, method, body = null) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                };
+
+                if (body) {
+                    options.body = JSON.stringify(body);
+                }
+
+                const response = await fetch(url, options);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Error:', error);
+                return { error: error.message };
+            }
+        }
+
+        // Filter by Status
+        const filterForm = document.getElementById('filterForm');
+        const filterResult = document.getElementById('filterResult');
+
+        filterForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(filterForm);
+            const status = formData.get('status');
+
+            const data = await fetchData('http://localhost:4000/api/admin/filterbystatus', 'POST', { status });
+            if (data.error) {
+                filterResult.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                filterResult.innerHTML = data.map(id => `<p>${id}</p>`).join('');
+            }
+        });
+
+        // Get All Employees
+        const loadEmployeesButton = document.getElementById('loadEmployees');
+        const employeesList = document.getElementById('employeesList');
+
+        loadEmployeesButton.addEventListener('click', async () => {
+            const data = await fetchData('http://localhost:4000/api/admin/getallemployees', 'GET');
+            if (data.error) {
+                employeesList.innerHTML = `<li>Error: ${data.error}</li>`;
+            } else {
+                employeesList.innerHTML = data.map(employee => `<li>${employee.username} - ${employee.Full_Name}</li>`).join('');
+            }
+        });
+
+        // Assign Complaint
+        const assignForm = document.getElementById('assignForm');
+        const assignResult = document.getElementById('assignResult');
+
+        assignForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(assignForm);
+            const assignee = formData.get('assignee');
+            const Dak_ID = formData.get('Dak_ID');
+
+            const data = await fetchData('http://localhost:4000/api/admin/assign', 'POST', { assignee, Dak_ID });
+            if (data.error) {
+                assignResult.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                assignResult.innerHTML = `<p>${data}</p>`;
+            }
+        });
+
+        // Add Employee
+        const addEmployeeForm = document.getElementById('addEmployeeForm');
+        const addEmployeeResult = document.getElementById('addEmployeeResult');
+
+        addEmployeeForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(addEmployeeForm);
+            const adminUsername = formData.get('adminUsername');
+            const employeeUsername = formData.get('employeeUsername');
+            const employeePassword = formData.get('employeePassword');
+
+            const data = await fetchData('http://localhost:4000/api/admin/addEmployee', 'POST', { adminUsername, employeeUsername, employeePassword });
+            if (data.error) {
+                addEmployeeResult.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                addEmployeeResult.innerHTML = `<p>${data}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
