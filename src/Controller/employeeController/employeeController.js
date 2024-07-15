@@ -1,5 +1,5 @@
-import { Helper } from "../../Helpers";
-import { Model } from "../../Models";
+import { Helper } from "../../Helpers/index.js";
+import { Model } from "../../Models/index.js";
 
 
 export const addRemarks = async(req,res)=>{

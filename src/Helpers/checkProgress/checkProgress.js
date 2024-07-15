@@ -38,8 +38,8 @@ const getStatusById = async (Dak_ID) => {
 // exampleUsage();
 
 
-const status = await getStatusById('AB105');
-console.log(`Status of complaint AB105: ${status}`);
+// const status = await getStatusById('AB105');
+// console.log(`Status of complaint AB105: ${status}`);
 
 
 

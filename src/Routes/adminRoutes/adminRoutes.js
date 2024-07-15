@@ -1,10 +1,10 @@
 import express from "express";
 const router = express.Router();
-import { adminController } from "../../Controllers/index.js";
+import { adminController ,userController} from "../../Controller/index.js";
 
-router.get("/progress",adminController.progress);
-router.post("/Complains",adminController.complains);
-router.post("/assign",adminController.assign);
-router.post("/addAdmin",adminController.addAdmin);
+router.post("/filterbystatus",adminController.filterByStatus);
+router.get("/getallemployees",adminController.getAllEmployees);
+router.post("/assign",adminController.addAssignment);
+router.post("/addEmployee",adminController.addEmployee);
 
 export default router;

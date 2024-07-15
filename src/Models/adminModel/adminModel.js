@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const filePath = '../../../assets/admin.json';
 
-export default saveUser = async (username, fullName, password) =>{
+const saveUser = async (username, fullName, password) =>{
     try {
         let users = {};
 
@@ -43,3 +43,4 @@ async function exampleUsage() {
 }
 
 // exampleUsage();
+export default saveUser;

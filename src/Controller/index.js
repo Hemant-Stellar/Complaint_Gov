@@ -5,20 +5,23 @@ import
     getAllEmployees,
     filterByStatus 
 } 
-from "./adminController/adminController";
+from "./adminController/adminController.js";
 
 import 
 {
     addRemarks,
     getassigned,
     getComplaintById
-} from "./employeeController/employeeController";
+} from "./employeeController/employeeController.js";
 
 import {
     signup,
     addComplaint,
     checkProgress
-} from "./userController/user.controller";
+} from "./userController/user.controller.js";
+
+
+
 
 export const adminController = { 
     addEmployee,

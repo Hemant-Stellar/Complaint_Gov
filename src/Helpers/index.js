@@ -1,9 +1,9 @@
-import addEmployee from "./addEmployee/addEmployee";
-import addRemarks from "./addRemarks/addRemarks";
-import addAssignment from "./assignComplains/assignHelper";
-import checkProgress from "./checkProgress/checkProgress";
-import {filterComplaintsByStatus, getAssignedComplaintIdsByUsername,getComplaintByDakId} from "./getComplains/getComplains";
-import getAllEmployees from "./getEmployee/getEmployee";
+import addEmployee from "./addEmployee/addEmployee.js";
+import addRemarks from "./addRemarks/addRemarks.js";
+import addAssignment from "./assignComplains/assignHelper.js";
+import checkProgress from "./checkProgress/checkProgress.js";
+import {filterComplaintsByStatus, getAssignedComplaintIdsByUsername,getComplaintByDakId} from "./getComplains/getComplains.js";
+import getAllEmployees from "./getEmployee/getEmployee.js";
 
 
 export const Helper = {

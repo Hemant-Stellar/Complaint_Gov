@@ -1,6 +1,6 @@
 import saveUser from "../../Models/userIdModel/userIdModel.js"
-import { Model } from '../../Models/index.js';
 import { Helper } from "../../Helpers/index.js";
+import { Model } from "../../Models/index.js";
 
 export const  signup= async(req,res)=>{
     try{

@@ -1,10 +1,9 @@
 import express from "express";
 const router = express.Router();
-import { usersController } from "../../Controllers/index.js";
+import { userController } from "../../Controller/index.js";
 
-router.post("/signup", usersController.signup);
-router.post("/login", usersController.login);
-router.post("/complainRegister",usersController.complainRegister);
-router.get("/complain",usersController.complain);
+router.post("/signup", userController.signup);
+router.post("/complainRegister",userController.addComplaint);
+router.get("/complain",userController.checkProgress);
 
 export default router;
