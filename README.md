@@ -1,5 +1,5 @@
-#Complaint Registration Platform
--part time 6hrs project simple yet good for demonstration
+# Complaint Registration Platform
+- part time 6hrs project simple yet good for demonstration
 
 ## Prequisite
 ### node should be installed at local.
