@@ -22,51 +22,5 @@
     "remarks": "hi",
     "Priority": null,
     "Assigned_Person": null
-  },
-  "A894": {
-    "Dak_ID": "A894",
-    "Date_Received": "27-12-2003",
-    "Sender_Information": "Alive",
-    "Sender_Number": 1234,
-    "Complaint_Details": "why i am alive",
-    "Status": "Pending",
-    "userName": "newUser",
-    "remarks": null,
-    "Priority": null,
-    "Assigned_Person": null
-  },
-  "A895": {
-    "Dak_ID": "A895",
-    "Date_Received": "25-09-24",
-    "Sender_Information": "human",
-    "Sender_Number": "1234567891",
-    "Complaint_Details": "urgent",
-    "Status": "Pending",
-    "userName": "newUser",
-    "remarks": null,
-    "Priority": null,
-    "Assigned_Person": null
-  },
-  "A898": {
-    "Dak_ID": "A898",
-    "Date_Received": "25-08-25",
-    "Sender_Information": "human",
-    "Sender_Number": "34656475886856",
-    "Complaint_Details": "urgent",
-    "Status": "Pending",
-    "remarks": null,
-    "Priority": null,
-    "Assigned_Person": null
-  },
-  "e3453": {
-    "Dak_ID": "e3453",
-    "Date_Received": "25-08-25",
-    "Sender_Information": "human",
-    "Sender_Number": "345342356",
-    "Complaint_Details": "rgjehrgiue",
-    "Status": "Pending",
-    "remarks": null,
-    "Priority": null,
-    "Assigned_Person": null
   }
 }
