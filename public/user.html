@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles can be added here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"],
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header Section -->
+        <header>
+            <h1>User Dashboard</h1>
+        </header>
+
+        <!-- Main Content Section -->
+        <main>
+            <!-- Sign Up Section -->
+            <section id="signup">
+                <h2>Sign Up</h2>
+                <form id="signupForm">
+                    <label for="usernameSU">Username:</label>
+                    <input type="text" id="usernameSU" name="username" required>
+                    <label for="fullNameSU">Full Name:</label>
+                    <input type="text" id="fullNameSU" name="fullName" required>
+                    <label for="passwordSU">Password:</label>
+                    <input type="password" id="passwordSU" name="password" required>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <div id="signupResult">
+                    <!-- Signup result message will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Register Complaint Section -->
+            <section id="registerComplaint">
+                <h2>Register Complaint</h2>
+                <form id="registerComplaintForm">
+                    <label for="Dak_ID">Complaint ID:</label>
+                    <input type="text" id="Dak_ID" name="Dak_ID" required>
+                    <label for="Date_Received">Date Received:</label>
+                    <input type="text" id="Date_Received" name="Date_Received" required>
+                    <label for="Sender_Information">Sender Information:</label>
+                    <input type="text" id="Sender_Information" name="Sender_Information" required>
+                    <label for="Sender_Number">Sender Number:</label>
+                    <input type="number" id="Sender_Number" name="Sender_Number" required>
+                    <label for="Complaint_Details">Complaint Details:</label>
+                    <input type="text" id="Complaint_Details" name="Complaint_Details" required>
+                    <input type="hidden" id="usernameRC" name="username" value="newUser"> <!-- Assuming username is static or from session -->
+                    <button type="submit">Register Complaint</button>
+                </form>
+                <div id="registerComplaintResult">
+                    <!-- Register complaint result message will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Get Complaint Status Section -->
+            <section id="getComplaintStatus">
+                <h2>Get Complaint Status</h2>
+                <form id="getComplaintStatusForm">
+                    <label for="complaintID">Complaint ID:</label>
+                    <input type="text" id="complaintID" name="complaintID" required>
+                    <button type="submit">Get Status</button>
+                </form>
+                <div id="complaintStatus">
+                    <!-- Complaint status will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Get Complaint Details Section -->
+            <section id="getComplaintDetails">
+                <h2>Get Complaint Details by ID</h2>
+                <form id="getComplaintDetailsForm">
+                    <label for="complaintIDGD">Complaint ID:</label>
+                    <input type="text" id="complaintIDGD" name="complaintID" required>
+                    <button type="submit">Get Details</button>
+                </form>
+                <div id="complaintDetails">
+                    <!-- Complaint details will be displayed here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to handle form submissions and fetch data
+        async function fetchData(url, method, body = {}) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                if (method !== 'GET') {
+                    options.body = JSON.stringify(body);
+                }
+
+                const response = await fetch(url, options);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+
+                // Check if response is JSON or text
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return await response.json();
+                } else {
+                    return await response.text();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                return { error: error.message };
+            }
+        }
+
+        // Sign Up
+        const signupForm = document.getElementById('signupForm');
+        const signupResult = document.getElementById('signupResult');
+
+        signupForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(signupForm);
+            const username = formData.get('username');
+            const fullName = formData.get('fullName');
+            const password = formData.get('password');
+
+            const data = await fetchData('http://localhost:4000/api/user/signup', 'POST', { username, fullName, password });
+            if (data.error) {
+                signupResult.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                signupResult.innerHTML = `<p>${data}</p>`;
+            }
+        });
+
+        // Register Complaint
+        const registerComplaintForm = document.getElementById('registerComplaintForm');
+        const registerComplaintResult = document.getElementById('registerComplaintResult');
+
+        registerComplaintForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(registerComplaintForm);
+            const Dak_ID = formData.get('Dak_ID');
+            const Date_Received = formData.get('Date_Received');
+            const Sender_Information = formData.get('Sender_Information');
+            const Sender_Number = formData.get('Sender_Number');
+            const Complaint_Details = formData.get('Complaint_Details');
+            const username = formData.get('username'); // Get username from the form
+
+            const data = await fetchData('http://localhost:4000/api/user/complainRegister', 'POST', { Dak_ID, Date_Received, Sender_Information, Sender_Number, Complaint_Details, username });
+            if (data.error) {
+                registerComplaintResult.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                registerComplaintResult.innerHTML = `<p>${data}</p>`;
+            }
+        });
+
+        // Get Complaint Status
+        const getComplaintStatusForm = document.getElementById('getComplaintStatusForm');
+        const complaintStatus = document.getElementById('complaintStatus');
+
+        getComplaintStatusForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(getComplaintStatusForm);
+            const Dak_ID = formData.get('complaintID');
+
+            const data = await fetchData(`http://localhost:4000/api/user/complain?Dak_ID=${Dak_ID}`, 'GET');
+            if (data.error) {
+                complaintStatus.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                complaintStatus.innerHTML = `<p>Status: ${data}</p>`;
+            }
+        });
+
+        // Get Complaint Details by ID
+        const getComplaintDetailsForm = document.getElementById('getComplaintDetailsForm');
+        const complaintDetails = document.getElementById('complaintDetails');
+
+        getComplaintDetailsForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(getComplaintDetailsForm);
+            const Dak_ID = formData.get('complaintID');
+
+            const data = await fetchData(`http://localhost:4000/api/employee/getComplaintById`, 'POST', { Dak_ID });
+            if (data.error) {
+                complaintDetails.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                complaintDetails.innerHTML = `<ul>
+                                                <li><strong>Dak ID:</strong> ${data.result.Dak_ID}</li>
+                                                <li><strong>Date Received:</strong> ${data.result.Date_Received}</li>
+                                                <li><strong>Sender Information:</strong> ${data.result.Sender_Information}</li>
+                                                <li><strong>Sender Number:</strong> ${data.result.Sender_Number}</li>
+                                                <li><strong>Complaint Details:</strong> ${data.result.Complaint_Details}</li>
+                                                <li><strong>Status:</strong> ${data.result.Status}</li>
+                                                <li><strong>Remarks:</strong> ${data.result.remarks}</li>
+                                                <li><strong>Priority:</strong> ${data.result.Priority}</li>
+                                                <li><strong>Assigned Person:</strong> ${data.result.Assigned_Person}</li>
+                                            </ul>`;
+            }
+        });
+    </script>
+</body>
+</html>

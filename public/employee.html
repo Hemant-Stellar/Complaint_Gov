@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles can be added here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"],
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header Section -->
+        <header>
+            <h1>Employee Dashboard</h1>
+        </header>
+
+        <!-- Main Content Section -->
+        <main>
+            <!-- Get Assigned Complaints Section -->
+            <section id="getAssignedComplaints">
+                <h2>Assigned Complaints</h2>
+                <form id="getAssignedForm">
+                    <label for="employeeUsername">Employee Username:</label>
+                    <input type="text" id="employeeUsername" name="employeeUsername" required>
+                    <button type="submit">Get Assigned Complaints</button>
+                </form>
+                <ul id="assignedComplaintsList">
+                    <!-- Assigned complaints will be populated here -->
+                </ul>
+            </section>
+
+            <!-- Get Complaint Details Section -->
+            <section id="getComplaintDetails">
+                <h2>Get Complaint Details</h2>
+                <form id="getComplaintForm">
+                    <label for="complaintID">Complaint ID:</label>
+                    <input type="text" id="complaintID" name="complaintID" required>
+                    <button type="submit">Get Complaint Details</button>
+                </form>
+                <div id="complaintDetails">
+                    <!-- Complaint details will be populated here -->
+                </div>
+            </section>
+
+            <!-- Add Remarks Section -->
+            <section id="addRemarks">
+                <h2>Add Remarks to Complaint</h2>
+                <form id="addRemarksForm">
+                    <label for="complaintID">Complaint ID:</label>
+                    <input type="text" id="complaintID" name="complaintID" required>
+                    <label for="newStatus">New Status:</label>
+                    <select id="newStatus" name="newStatus">
+                        <option value="Complete">Complete</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                    <label for="remarks">Remarks:</label>
+                    <input type="text" id="remarks" name="remarks">
+                    <button type="submit">Add Remarks</button>
+                </form>
+                <div id="addRemarksResult">
+                    <!-- Result message will be displayed here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to handle form submissions and fetch data
+        async function fetchData(url, method, body = {}) {
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return await response.json();
+                } else {
+                    return await response.text(); // Handle string response
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                return { error: error.message };
+            }
+        }
+
+        // Get Assigned Complaints
+        const getAssignedForm = document.getElementById('getAssignedForm');
+        const assignedComplaintsList = document.getElementById('assignedComplaintsList');
+
+        getAssignedForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(getAssignedForm);
+            const employeeUsername = formData.get('employeeUsername');
+
+            const data = await fetchData('http://localhost:4000/api/employee/getassigned', 'POST', { employeeUsername });
+            if (data.error) {
+                assignedComplaintsList.innerHTML = `<li>Error: ${data.error}</li>`;
+            } else {
+                assignedComplaintsList.innerHTML = data.result.map(dakId => `<li>${dakId}</li>`).join('');
+            }
+        });
+
+        // Get Complaint Details
+        const getComplaintForm = document.getElementById('getComplaintForm');
+        const complaintDetails = document.getElementById('complaintDetails');
+
+        getComplaintForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(getComplaintForm);
+            const complaintID = formData.get('complaintID');
+
+            const data = await fetchData('http://localhost:4000/api/employee/getComplaintById', 'POST', { Dak_ID: complaintID });
+            if (data.error) {
+                complaintDetails.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                const complaint = data.result;
+                complaintDetails.innerHTML = `
+                    <ul>
+                        <li><strong>Complaint ID:</strong> ${complaint.Dak_ID}</li>
+                        <li><strong>Date Received:</strong> ${complaint.Date_Received}</li>
+                        <li><strong>Sender Information:</strong> ${complaint.Sender_Information}</li>
+                        <li><strong>Sender Number:</strong> ${complaint.Sender_Number}</li>
+                        <li><strong>Complaint Details:</strong> ${complaint.Complaint_Details}</li>
+                        <li><strong>Status:</strong> ${complaint.Status}</li>
+                        <li><strong>Assigned Person:</strong> ${complaint.Assigned_Person || 'Not assigned'}</li>
+                        <li><strong>Remarks:</strong> ${complaint.remarks || 'No remarks'}</li>
+                    </ul>
+                `;
+            }
+        });
+
+        // Add Remarks to Complaint
+        const addRemarksForm = document.getElementById('addRemarksForm');
+        const addRemarksResult = document.getElementById('addRemarksResult');
+
+        addRemarksForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(addRemarksForm);
+            const complaintID = formData.get('complaintID');
+            const newStatus = formData.get('newStatus');
+            const remarks = formData.get('remarks');
+
+            const data = await fetchData('http://localhost:4000/api/employee/addremarks', 'POST', { 
+                employeeUsername: "Priyanshi",
+                complaintID, 
+                newStatus, 
+                remarks 
+            });
+            if (data.error) {
+                addRemarksResult.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                addRemarksResult.innerHTML = `<p>${data}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
