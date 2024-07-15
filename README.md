@@ -3,14 +3,19 @@
 
 ## Prequisite
 ### node should be installed at local.
-### Running Server
+### Running Project
 #### Commands
-- 1
+- 1 
+    ```
+    git clone https://github.com/Hemant-Stellar/Complaint_Gov.git  && cd Complaint_Gov
+  
+    ```
+- 2
   ```
    npm i
   
   ```
-- 2
+- 3
   ```
    npm start
   
