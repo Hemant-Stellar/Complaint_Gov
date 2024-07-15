@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 
-const filePath = '../../../assets/complaint.json';
+const filePath = './assets/complaint.json';
 
 // Function to get the status of a complaint by Dak_ID
 const getStatusById = async (Dak_ID) => {

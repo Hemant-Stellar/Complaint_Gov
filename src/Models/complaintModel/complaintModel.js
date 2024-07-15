@@ -1,6 +1,6 @@
 import { writeFile, readFile } from 'fs/promises';
 
-const filePath = '../../../assets/complaint.json';
+const filePath = './assets/complaint.json';
 
 // Define enum for Status
 const StatusEnum = {
@@ -9,16 +9,15 @@ const StatusEnum = {
     ASSIGNED: 'Assigned'
 };
 
-async function saveComplaint(
+export const saveComplaint = async  (
     Dak_ID, 
     Date_Received, 
     Sender_Information, 
     Sender_Number, 
     Complaint_Details, 
     Status = StatusEnum.PENDING, // Default status to Pending if not provided
-    userName, 
-    remarks
-) {
+    userName
+) => {
     try {
         let complaints = {};
 
@@ -82,7 +81,6 @@ async function saveComplaint(
 // }
 
 // exampleUsage();
-export default saveComplaint;
 
 // const x = await saveComplaint(
 //     'AB105', 

@@ -1,7 +1,7 @@
 import { writeFile, readFile } from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
 
-const filePath = '../../../assets/admin.json';
+const filePath = './assets/admin.json';
 
 const saveUser = async (username, fullName, password) =>{
     try {

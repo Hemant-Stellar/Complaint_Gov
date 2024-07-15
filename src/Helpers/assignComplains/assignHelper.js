@@ -1,6 +1,6 @@
 import { writeFile, readFile } from 'fs/promises';
 
-const filePath = '../../../assets/assigned.json';
+const filePath = './assets/assigned.json';
 
 async function addAssignment(assignee, Dak_ID) {
     try {

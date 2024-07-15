@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'fs/promises';
 
-const employeeFilePath = '../../../assets/employee.json';
-const assignmentsFilePath = '../../../assets/assignments.json';
+const employeeFilePath = './assets/employee.json';
+const assignmentsFilePath = './assets/assigned.json';
 
 async function changeComplaintStatus(employeeUsername, complaintID, newStatus, remarks = null) {
     try {
@@ -26,7 +26,7 @@ async function changeComplaintStatus(employeeUsername, complaintID, newStatus, r
         }
 
         // Step 3: Update status of the complaint
-        const complaintsFilePath = '../../../assets/complaint.json';
+        const complaintsFilePath = './assets/complaint.json';
         const complaintsData = await readFile(complaintsFilePath, 'utf-8');
         const complaintsJson = JSON.parse(complaintsData);
 

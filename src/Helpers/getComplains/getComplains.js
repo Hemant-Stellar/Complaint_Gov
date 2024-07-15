@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 
-const filePath = '../../../assets/complaint.json';
+const filePath = './assets/complaint.json';
 
 // Function to filter complaints by status and return their IDs
 export const filterComplaintsByStatus =async (status)=> {
@@ -51,7 +51,7 @@ export const filterComplaintsByStatus =async (status)=> {
 
 
 
-const assignmentsFilePath = '../../../assets/assigned.json';
+const assignmentsFilePath = './assets/assigned.json';
 
 export const getAssignedComplaintIdsByUsername = async (employeeUsername) => {
     try {
@@ -73,7 +73,7 @@ export const getAssignedComplaintIdsByUsername = async (employeeUsername) => {
     }
 };
 
-const complaintsFilePath =  '../../../assets/complaint.json';
+const complaintsFilePath =  './assets/complaint.json';
 
 export const getComplaintByDakId = async (dakId)=> {
     try {

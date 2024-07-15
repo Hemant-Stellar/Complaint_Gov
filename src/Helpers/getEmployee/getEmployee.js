@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 
-const employeeFilePath = '../../../assets/employee.json';
+const employeeFilePath = './assets/employee.json';
 
 async function getAllEmployees() {
     try {

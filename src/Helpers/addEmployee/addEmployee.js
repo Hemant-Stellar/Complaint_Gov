@@ -1,8 +1,8 @@
 
 import { readFile, writeFile } from 'fs/promises';
 
-const adminFilePath = '../../../assets/admin.json';
-const employeeFilePath = '../../../assets/employee.json';
+const adminFilePath = './assets/admin.json';
+const employeeFilePath = './assets/employee.json';
 
 async function addEmployee(adminUsername, employeeUsername, employeePassword) {
     try {
@@ -11,7 +11,7 @@ async function addEmployee(adminUsername, employeeUsername, employeePassword) {
         const adminJson = JSON.parse(adminData);
 
         // Check if admin username exists and password matches
-        if (adminJson[adminUsername] && adminJson[adminUsername].password === adminPassword) {
+        if (adminJson[adminUsername]){
             // Step 2: Read employee data from employee JSON file
             const employeeData = await readFile(employeeFilePath, 'utf-8');
             const employeeJson = JSON.parse(employeeData);
