@@ -85,20 +85,19 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Welcome to Dashboard Selector</h1>
-    <div class="button-container">
-        <button class="button" onclick="redirectTo('/user')">User Dashboard</button>
-        <button class="button" onclick="redirectTo('/admin')">Admin Dashboard</button>
-        <button class="button" onclick="redirectTo('/employee')">Employee Dashboard</button>
+ <div class="container">
+        <h1>Welcome to Dashboard Selector</h1>
+        <div class="button-container">
+            <button class="button" onclick="redirectTo('/user')">User Dashboard</button>
+            <button class="button" onclick="redirectTo('/admin')">Admin Dashboard</button>
+            <button class="button" onclick="redirectTo('/employee')">Employee Dashboard</button>
+        </div>
     </div>
-</div>
 
-<script>
-    function redirectTo(path) {
-        window.location.href = `${window.location.origin}${path}/`;
-    }
-</script>
+    <script>
+        function redirectTo(path) {
+            window.location.href = `http://localhost:4000${path}/`;
+        }
 
 </body>
 </html>
