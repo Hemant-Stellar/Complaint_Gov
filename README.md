@@ -8,7 +8,7 @@
 ### Commands
 - 1 
     ```
-    git clone https://github.com/Hemant-Stellar/Complaint_Gov.git  && cd Complaint_Gov
+    git clone https://github.com/Priyanshi7559/Complaint_Gov.git  && cd Complaint_Gov
   
     ```
 - 2
